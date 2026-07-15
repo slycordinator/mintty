@@ -8,17 +8,20 @@ esac
 #############################################################################
 # download Noto font emojis
 
-if [ -d noto-emojis ]
-then	if [ -d noto-emojis/.git ]
-	then	(cd noto-emojis; git pull)
-	else	echo WARNING: directory noto-emojis already exists but no git config - Exit
+if [ -d noto-emojis ]; then
+	if [ -d noto-emojis/.git ]; then
+		(cd noto-emojis; git pull)
+	else
+		echo WARNING: directory noto-emojis already exists but no git config - Exit
 		exit 9
 	fi
 else
 	notogit=https://github.com/googlefonts/noto-emoji
-	if git clone $tag --depth 1 -n --filter=blob:none $notogit noto-emojis
-	then	true
-	else	echo WARNING: given git tag $tag not found - Exit
+	#shellcheck disable=SC2086
+	if git clone $tag --depth 1 -n --filter=blob:none $notogit noto-emojis; then
+		true
+	else
+		echo "WARNING: given git tag $tag not found - Exit"
 		exit 9
 	fi
 	(cd noto-emojis
@@ -32,10 +35,11 @@ fi
 # download Noto third-party flags emojis
 # like getflags -n but use same repository
 
-if [ -d noto-emoji-flags ]
-then	if [ -d noto-emoji-flags/.git ]
-	then	(cd noto-emoji-flags; git pull)
-	else	echo WARNING: directory noto-emoji-flags already exists but no git config - Exit
+if [ -d noto-emoji-flags ]; then
+	if [ -d noto-emoji-flags/.git ]; then
+		(cd noto-emoji-flags; git pull)
+	else
+		echo WARNING: directory noto-emoji-flags already exists but no git config - Exit
 		exit 9
 	fi
 else
@@ -46,7 +50,7 @@ fi
 #############################################################################
 # download rename Noto third-party flags
 
-`dirname $0`/getflags -e
+"$(dirname "$0")"/getflags -e
 
 #############################################################################
 # end

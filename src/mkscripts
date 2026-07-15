@@ -1,4 +1,4 @@
-#! /bin/sh -f
+#!/bin/sh -f
 
 skipcheck=false
 
@@ -14,8 +14,8 @@ else	echo Could not acquire Unicode data file Blocks.txt >&2
 fi
 
 getranges () {
-	egrep '^[^#]' Scripts.txt
-	egrep "(Arrows|Mathematical Operators|Technical|Enclosed Alphanumerics|Pictographs|Control Pictures|Optical|Box Drawing|Miscellaneous.*Symbols|Block Elements|Geometric Shapes|Dingbats|Tiles|Cards|Emoticons|Transport|Alchemical|Chess)" Blocks.txt |
+	grep -E '^[^#]' Scripts.txt
+	grep -E "(Arrows|Mathematical Operators|Technical|Enclosed Alphanumerics|Pictographs|Control Pictures|Optical|Box Drawing|Miscellaneous.*Symbols|Block Elements|Geometric Shapes|Dingbats|Tiles|Cards|Emoticons|Transport|Alchemical|Chess)" Blocks.txt |
 	sed -e "s,;.*, ; PictoSymbols,"
 	cat <</eou
 3030..3037; CJK # CJK Symbols and Punctuation

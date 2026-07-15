@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 unidata=UnicodeData.txt
 make $unidata >&2

@@ -1,8 +1,14 @@
-#! /bin/bash
+#!/bin/bash
 
-emojidata="emoji-data.txt emoji-variation-sequences.txt emoji-sequences.txt emoji-zwj-sequences.txt emoji-test.txt"
+emojidata=(
+	emoji-data.txt
+	emoji-variation-sequences.txt
+	emoji-sequences.txt
+	emoji-zwj-sequences.txt
+	emoji-test.txt
+)
 make Blocks.txt >&2
-make $emojidata >&2
+make "${emojidata[@]}" >&2
 
 case "$1" in
 
@@ -76,13 +82,13 @@ seqs)
 #1FAF8 1F3FF  ; fully-qualified   # 🫸🏿 E15.0 rightwards pushing hand: dark skin tone
 
 (
-cat emoji-sequences.txt | grep -v Basic_Emoji
+grep -v Basic_Emoji emoji-sequences.txt
 cat emoji-zwj-sequences.txt
 use_emoji_test=true
 if $use_emoji_test
 then
 echo with emoji-test.txt >&2
-cat emoji-test.txt | grep -v "^[0-9A-F]* *;" |
+grep -v "^[0-9A-F]* *;" emoji-test.txt |
 LC_CTYPE=C sed -e 's/; *component/;;/' -e 's/; *[-a-z]*qualified/;;/' \
     -e 's/keycap: #$/keycap: \\x{23}/' \
     -e 's/;; *\(#.*E[0-9]*\.[0-9]* *\)\(.*\)/;; \2 \1/'

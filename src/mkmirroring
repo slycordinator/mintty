@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 mirroring=BidiMirroring.txt
 make $mirroring >&2

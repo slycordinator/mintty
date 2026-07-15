@@ -1,16 +1,14 @@
-#! /bin/sh
+#!/bin/sh
 
 echo 'static style_desc ws_ex_styles[] = {'
 
-cat /usr/include/w32api/winuser.h |
-sed -e 's/#define *\(WS_EX_[^ ]*\).*/	{\1, "\1"},/' -e t -e d
+sed -e 's/#define *\(WS_EX_[^ ]*\).*/	{\1, "\1"},/' -e t -e d /usr/include/w32api/winuser.h
 
 echo '};'
 
 echo 'static style_desc ws_styles[] = {'
 
-cat /usr/include/w32api/winuser.h |
-sed -e "/WS_EX_/ d" -e 's/#define *\(WS_[^ ]*\).*/	{\1, "\1"},/' -e t -e d
+sed -e "/WS_EX_/ d" -e 's/#define *\(WS_[^ ]*\).*/	{\1, "\1"},/' -e t -e d /usr/include/w32api/winuser.h
 
 echo '};'
 

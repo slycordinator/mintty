@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 brackets=BidiBrackets.txt
 unidata=UnicodeData.txt

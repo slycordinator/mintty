@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # generate WIDTH-A file, listing Unicode characters with width property
 # Ambiguous, from EastAsianWidth.txt

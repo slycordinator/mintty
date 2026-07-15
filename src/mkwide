@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # generate list of wide characters, with convex closure
 
@@ -23,27 +23,27 @@ fi
 sed -e "s,^\([^;]*\) *; *[NAH],\1," -e t -e d EastAsianWidth.txt > wide.na
 sed -e "s,^\([^;]*\) *; *[WF],\1," -e t -e d EastAsianWidth.txt > wide.fw
 
-nrfw=`uniset +wide.fw nr | sed -e 's,.*:,,'`
-echo FW $nrfw
-nrna=`uniset +wide.na nr | sed -e 's,.*:,,'`
-echo NAH $nrna
+nrfw="$(uniset '+wide.fw nr' | sed -e 's,.*:,,')"
+echo "FW $nrfw"
+nrna="$(uniset '+wide.na nr' | sed -e 's,.*:,,')"
+echo "NAH $nrna"
 
 extrablocks="2E80-303E"
 
 # check all blocks
 includes () {
-	nr=`uniset +wide.$2 -$1 nr | sed -e 's,.*:,,'`
-	test $nr != $3
+	nr="$(uniset "+wide.$2 -$1 nr" | sed -e 's,.*:,,')"
+	[ "$nr" != "$3" ]
 }
 echo "adding compact closure of wide ranges, this may take a few minutes"
-for b in $extrablocks `sed -e 's,^\([0-9A-F]*\)\.\.\([0-9A-F]*\).*,\1-\2,' -e t -e d Blocks.txt`
+for b in $extrablocks $(sed -e 's,^\([0-9A-F]*\)\.\.\([0-9A-F]*\).*,\1-\2,' -e t -e d Blocks.txt)
 do	range=$b
-	echo checking $range $* >&2
-	if includes $range fw $nrfw && ! includes $range na $nrna
-	then	echo $range
+	echo checking "$range" "$*" >&2
+	if includes "$range fw $nrfw" && ! includes "$range na $nrna"
+	then	echo "$range"
 	fi
 done > wide.blocks
 
-uniset `sed -e 's,^,+,' wide.blocks` +wide.fw c > wide.t
+uniset "$(sed -e 's,^,+,' wide.blocks) +wide.fw c" > wide.t
 
 rm -f wide.na wide.fw wide.blocks

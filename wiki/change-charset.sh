@@ -4,13 +4,13 @@
 
 changecs () {
 	# determine which locale environment variables are set
-	lcvars=`env | sed -e "s,^LANG=.*,LANG," -e "s,^\(LC_[A-Z]*\)=.*,\1," -e t -e d`
+	lcvars="$(env | sed -e "s,^LANG=.*,LANG," -e "s,^\(LC_[A-Z]*\)=.*,\1," -e t -e d)"
 	# change them to the new character set; if none is set, set LC_CTYPE
 	for lcvar in ${lcvars:-LC_CTYPE}
-	do	lc=`eval echo '$'$lcvar`
-		lc=`echo $lc | sed -e "s,[.@].*,,"`.$1
-		eval $lcvar=$lc
-		eval export $lcvar
+	do	lc="$(eval echo '$'$lcvar)"
+		lc="$(echo "$lc" | sed -e "s,[.@].*,,")".$1
+		eval "$lcvar"="$lc"
+		eval export "$lcvar"
 	done
 	# get effective character set, checking locale environment variables 
 	# in order of precedence

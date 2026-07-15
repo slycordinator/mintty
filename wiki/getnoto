@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 tag=
 case "$1" in
@@ -16,9 +16,10 @@ then	if [ -d noto-emojis/.git ]
 	fi
 else
 	notogit=https://github.com/googlefonts/noto-emoji
+	#shellcheck disable=SC2086
 	if git clone $tag --depth 1 -n --filter=blob:none $notogit noto-emojis
 	then	true
-	else	echo WARNING: given git tag $tag not found - Exit
+	else	echo "WARNING: given git tag $tag not found - Exit"
 		exit 9
 	fi
 	(cd noto-emojis
@@ -41,12 +42,12 @@ then	if [ -d noto-emoji-flags/.git ]
 else
 	ln -s noto-emojis noto-emoji-flags
 fi
-(cd noto-emoji-flags; rm -f *.png; ln third_party/region-flags/png/*.png ./)
+(cd noto-emoji-flags; rm -f ./*.png; ln third_party/region-flags/png/*.png ./)
 
 #############################################################################
 # download rename Noto third-party flags
 
-`dirname $0`/getflags -e
+"$(dirname "$0")"/getflags -e
 
 #############################################################################
 # end

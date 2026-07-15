@@ -1,4 +1,4 @@
-#! /bin/sh -f
+#!/bin/sh -f
 
 unidata=UnicodeData.txt
 make $unidata >&2
@@ -29,7 +29,7 @@ export LC_ALL
 sed	-e 's/^\([^;]*\);COMBINING \([^;]*\);[^;]*;[^;]*;[^;]*;[^;]*;[^;]*;[^;]*;[^;]*;[^;]*;\([^;]*\);.*/\2	\1/' \
 	-e t -e d "$unidata" | sort > .combining
 sed	-e 's/^\([^	]*\)	\([^	]*\).*/;\1;/' .combining > .combining-names
-fgrep -f .combining-names "$unidata" |
+grep -F -f .combining-names "$unidata" |
 sed	-e 's/^\([^;]*\);\([^;]*\);.*/\2	\1/' | sort > .spacing
 join -t '	' .combining .spacing |
 cut -d '	' -f 2,3 |

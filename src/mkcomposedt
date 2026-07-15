@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 list=/usr/share/X11/locale/en_US.UTF-8/Compose
 

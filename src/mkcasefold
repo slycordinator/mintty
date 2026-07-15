@@ -1,4 +1,4 @@
-#! /bin/sh -f
+#!/bin/sh -f
 
 if make CaseFolding.txt
 then	true
